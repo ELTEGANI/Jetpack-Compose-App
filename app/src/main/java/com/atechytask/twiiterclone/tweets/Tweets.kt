@@ -25,7 +25,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @AndroidEntryPoint
 @ExperimentalCoroutinesApi
-class TweetsActivity : AppCompatActivity() {
+class Tweets : AppCompatActivity() {
+
     private val viewModel: TweetsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
