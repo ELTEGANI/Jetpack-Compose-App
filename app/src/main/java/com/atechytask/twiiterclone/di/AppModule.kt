@@ -12,6 +12,7 @@ import javax.inject.Singleton
 object AppModule {
     @Provides
     @Singleton
-    fun provideQueryTweetsByName() = FirebaseFirestore.getInstance()
+    fun provideQueryTweets() = FirebaseFirestore.getInstance()
         .collection("tweets")
+        .orderBy("tweets")
 }

@@ -24,14 +24,15 @@ class TweetsViewModel @Inject constructor(
     )
 
     init {
-        getProducts()
+        getAllTweets()
     }
 
-    private fun getProducts() {
+    private fun getAllTweets() {
         viewModelScope.launch {
             loading.value = true
             data.value = repository.getTweetsFromFirestore()
             loading.value = false
         }
     }
+
 }
