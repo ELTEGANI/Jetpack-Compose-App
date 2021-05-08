@@ -68,6 +68,11 @@ dependencies {
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
     kapt "androidx.hilt:hilt-compiler:1.0.0"
 
+    // Coil
+    implementation "io.coil-kt:coil:1.1.1"
+    implementation "com.google.accompanist:accompanist-coil:0.7.0"
+
+
 }
 apply plugin: 'com.google.gms.google-services'
 
