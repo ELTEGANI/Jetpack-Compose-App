@@ -1,21 +1,15 @@
 package com.atechytask.twiiterclone.composables
 
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import com.atechytask.twiiterclone.data.Tweets
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,43 +24,78 @@ fun TweetCard(
     tweets: Tweets
 ) {
     Card(
-        shape = MaterialTheme.shapes.small,
         modifier = Modifier
             .padding(
-                start = 8.dp,
-                end = 8.dp,
-                top = 4.dp,
-                bottom = 4.dp
+                start = 0.dp,
+                end = 0.dp,
+                top = 0.dp,
+                bottom = 0.dp
             )
-            .fillMaxWidth(),
-        elevation = 3.dp,
+            .fillMaxWidth()
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(all = 12.dp)
         ){
             tweets.user_name?.let { name ->
                 Text(
                     text = name,
                     modifier = Modifier
                         .fillMaxWidth(0.85f)
-                        .wrapContentWidth(Alignment.Start),
-                    color = Color.DarkGray,
-                    fontSize = 25.sp
+                        .wrapContentWidth(Alignment.Start)
+                        .padding(
+                            start = 110.dp,
+                            end = 0.dp,
+                            top = 0.dp,
+                            bottom = 0.dp
+                        ),
+                        color = Color.Black,
+                        fontSize = 14.sp
                 )
             }
         }
-        CoilImage(
-            request = ImageRequest.Builder(LocalContext.current)
-                .data(tweets.image_url)
-                .build(),
-            contentDescription = "image",
+        Row(
             modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .size(42.dp)
-                .clip(CircleShape)
-        )
+                .fillMaxWidth()
+        ){
+            tweets.tweets?.let { tweets ->
+                Text(
+                    text = tweets,
+                    modifier = Modifier
+                        .fillMaxWidth(0.85f)
+                        .wrapContentWidth(Alignment.Start)
+                        .padding(
+                            start = 110.dp,
+                            end = 0.dp,
+                            top = 0.dp,
+                            bottom = 40.dp
+                        ),
+                    color = Color.Black,
+                    fontSize = 14.sp
+                )
+            }
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            CoilImage(
+                request = ImageRequest.Builder(LocalContext.current)
+                    .data(tweets.image_url)
+                    .build(),
+                contentDescription = "image",
+                modifier = Modifier
+                    .padding(
+                        start = 5.dp,
+                        end = 0.dp,
+                        top = 0.dp,
+                        bottom = 0.dp
+                    )
+                    .size(100.dp)
+                    .align(Alignment.Top)
+                    .clip(CircleShape)
+            )
+        }
     }
 }
 @Preview
