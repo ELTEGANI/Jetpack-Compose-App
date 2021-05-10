@@ -29,11 +29,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.navigate
 import com.atechytask.twiiterclone.R
 
 
 @Composable
-fun LoginPage(){
+fun LoginPage(navController: NavController){
     val emailValue = remember {
         mutableStateOf("")
     }
@@ -130,7 +132,12 @@ fun LoginPage(){
 
                     Spacer(modifier = Modifier.padding(20.dp))
                     Text(text = "Don't have a Teamio account Yet? Sign Up",
-                        modifier = Modifier.clickable(onClick={}))
+                        modifier = Modifier.clickable(onClick={
+                            navController.navigate("registeraton_page"){
+                                popUpTo = navController.graph.startDestination
+                                launchSingleTop = true
+                            }
+                        }))
                     Spacer(modifier = Modifier.padding(20.dp))
 
                 }
