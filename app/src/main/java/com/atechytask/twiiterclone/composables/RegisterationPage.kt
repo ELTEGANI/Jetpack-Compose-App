@@ -26,6 +26,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import com.atechytask.twiiterclone.R
@@ -51,6 +54,8 @@ fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
 
     val context = LocalContext.current
 
+
+
     Box(modifier = Modifier.fillMaxSize(),contentAlignment = Alignment.BottomCenter){
         Box(modifier = Modifier
             .fillMaxSize()
@@ -66,7 +71,6 @@ fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
                 .background(Color.White)
                 .padding(10.dp)
         ){
-
             val image: Painter = painterResource(id = R.drawable.logo)
             Image(painter = image,
                 contentDescription = ""
@@ -177,7 +181,6 @@ fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
                             confirmPasswordValue.value)
                     }
                 },
-
                     modifier = Modifier
                         .padding(5.dp)
                         .width(150.dp)
@@ -188,7 +191,6 @@ fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
                         .colors.onPrimary)
                 }
 
-
                 Spacer(modifier = Modifier.padding(20.dp))
                 Text(text = "Already have account? Sign in",
                     modifier = Modifier.clickable(onClick={
@@ -198,8 +200,14 @@ fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
                         }
                     }))
                 Spacer(modifier = Modifier.padding(20.dp))
-
             }
         }
     }
+    if (viewModel.navigateTo.value){
+      navController.navigate("login_page"){
+          popUpTo = navController.graph.startDestination
+          launchSingleTop = true
+      }
+    }
+
 }

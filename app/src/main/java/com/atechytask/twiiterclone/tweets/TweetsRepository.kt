@@ -15,7 +15,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 @Singleton
 class TweetsRepository @Inject constructor(
-    private val queryTweets: Query,private val firebaseFirestore: FirebaseFirestore
+    private val queryTweets: Query,
+    private val firebaseFirestore: FirebaseFirestore
 ) {
     suspend fun getTweetsFromFirestore(): DataOrException<List<Tweets>, Exception> {
         val dataOrException = DataOrException<List<Tweets>, Exception>()
@@ -29,11 +30,7 @@ class TweetsRepository @Inject constructor(
         return dataOrException
     }
 
-    fun signUpUser(
-        name: String,
-        email: String,
-        password: String,
-        confirmPassword:String
+    fun signUpUser(name: String,email: String,password: String,confirmPassword:String
     ) {
         val dbUser: CollectionReference = firebaseFirestore.collection("users")
         val signUp = SignUp(name,email,password,confirmPassword)
