@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.atechytask.twiiterclone.composables.LoginPage
 import com.atechytask.twiiterclone.composables.ProgressBar
+import com.atechytask.twiiterclone.composables.RegisterationPage
 import com.atechytask.twiiterclone.composables.TweetCard
 import com.atechytask.twiiterclone.data.DataOrException
 import com.atechytask.twiiterclone.data.Tweets
@@ -42,7 +43,8 @@ class Tweets : AppCompatActivity() {
 
     @Composable
     fun LoginApplication(){
-        LoginPage()
+        //LoginPage()
+        RegisterationPage()
     }
 
 //    @Composable
