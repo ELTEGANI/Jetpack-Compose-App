@@ -16,6 +16,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.atechytask.twiiterclone.composables.LoginPage
 import com.atechytask.twiiterclone.composables.ProgressBar
 import com.atechytask.twiiterclone.composables.RegisterationPage
@@ -43,8 +46,15 @@ class Tweets : AppCompatActivity() {
 
     @Composable
     fun LoginApplication(){
+        val navController = rememberNavController()
+        NavHost(navController = navController, startDestination = "login_page",builder = {
+             composable("login_page",content = { LoginPage(navController = navController)})
+             composable("registeraton_page",content = { RegisterationPage(navController = navController)})
+        })
+
+
         //LoginPage()
-        RegisterationPage()
+        //RegisterationPage()
     }
 
 //    @Composable

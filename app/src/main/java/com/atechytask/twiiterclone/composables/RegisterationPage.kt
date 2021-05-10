@@ -8,9 +8,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,10 +24,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.navigate
 import com.atechytask.twiiterclone.R
 
 @Composable
-fun RegisterationPage(){
+fun RegisterationPage(navController: NavController){
     val nameValue = remember {
         mutableStateOf("")
     }
@@ -174,7 +173,12 @@ fun RegisterationPage(){
 
                 Spacer(modifier = Modifier.padding(20.dp))
                 Text(text = "Already have account? Sign in",
-                    modifier = Modifier.clickable(onClick={}))
+                    modifier = Modifier.clickable(onClick={
+                        navController.navigate("login_page"){
+                            popUpTo = navController.graph.startDestination
+                            launchSingleTop = true
+                        }
+                    }))
                 Spacer(modifier = Modifier.padding(20.dp))
 
             }
