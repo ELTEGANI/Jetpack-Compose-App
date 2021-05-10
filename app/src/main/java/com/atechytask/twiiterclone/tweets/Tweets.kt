@@ -14,7 +14,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -49,7 +48,7 @@ class Tweets : AppCompatActivity() {
         val navController = rememberNavController()
         NavHost(navController = navController, startDestination = "login_page",builder = {
              composable("login_page",content = { LoginPage(navController = navController)})
-             composable("registeraton_page",content = { RegisterationPage(navController = navController)})
+             composable("registeraton_page",content = { RegisterationPage(navController = navController,viewModel)})
         })
 
 
@@ -57,36 +56,36 @@ class Tweets : AppCompatActivity() {
         //RegisterationPage()
     }
 
-//    @Composable
-//    fun TweetsActivity(dataOrException: DataOrException<List<Tweets>, Exception>) {
-//        val tweets = dataOrException.data
-//        tweets?.let {
-//            LazyColumn {
-//                items(
-//                    items = tweets
-//                ) { tweet ->
-//                    TweetCard(tweets = tweet)
-//                }
-//            }
-//        }
-//
-//        val e = dataOrException.e
-//        e?.let {
-//            Text(
-//                text = e.message!!,
-//                modifier = Modifier.padding(16.dp)
-//            )
-//        }
-//
-//        Column(
-//            modifier = Modifier.fillMaxSize(),
-//            verticalArrangement = Arrangement.Center,
-//            horizontalAlignment = Alignment.CenterHorizontally
-//        ) {
-//            ProgressBar(
-//                isDisplayed = viewModel.loading.value
-//            )
-//        }
-//    }
+    @Composable
+    fun TweetsActivity(dataOrException: DataOrException<List<Tweets>, Exception>) {
+        val tweets = dataOrException.data
+        tweets?.let {
+            LazyColumn {
+                items(
+                    items = tweets
+                ) { tweet ->
+                    TweetCard(tweets = tweet)
+                }
+            }
+        }
+
+        val e = dataOrException.e
+        e?.let {
+            Text(
+                text = e.message!!,
+                modifier = Modifier.padding(16.dp)
+            )
+        }
+
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            ProgressBar(
+                isDisplayed = viewModel.loading.value
+            )
+        }
+    }
 }
 
