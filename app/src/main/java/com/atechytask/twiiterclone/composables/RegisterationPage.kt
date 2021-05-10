@@ -1,5 +1,6 @@
 package com.atechytask.twiiterclone.composables
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -27,9 +29,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import com.atechytask.twiiterclone.R
+import com.atechytask.twiiterclone.tweets.TweetsViewModel
 
 @Composable
-fun RegisterationPage(navController: NavController){
+fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
+
     val nameValue = remember {
         mutableStateOf("")
     }
@@ -44,6 +48,8 @@ fun RegisterationPage(navController: NavController){
     val confirmPasswordValue = remember {
         mutableStateOf("")
     }
+
+    val context = LocalContext.current
 
     Box(modifier = Modifier.fillMaxSize(),contentAlignment = Alignment.BottomCenter){
         Box(modifier = Modifier
@@ -105,8 +111,7 @@ fun RegisterationPage(navController: NavController){
                         unfocusedIndicatorColor = Color.Transparent,
                         focusedIndicatorColor = Color.Transparent,
                     ),
-                    onValueChange = {passwordValue.value =  it },
-                    visualTransformation = PasswordVisualTransformation(),
+                    onValueChange = {emailValue.value =  it },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                     placeholder = { Text(text = "Email") },
                     modifier = Modifier
@@ -160,7 +165,19 @@ fun RegisterationPage(navController: NavController){
                 val mainButtonColor = ButtonDefaults.buttonColors(
                     backgroundColor = MaterialTheme.colors.secondary
                 )
-                Button(colors = mainButtonColor,onClick ={},
+                Button(colors = mainButtonColor,onClick ={
+                    if (nameValue.value.isEmpty() ||emailValue.value.isEmpty() || passwordValue.value.isEmpty() ||
+                        confirmPasswordValue.value.isEmpty()){
+                        Toast.makeText(context,"Please Fill Empty Field",Toast.LENGTH_SHORT).show()
+                    }else{
+                        viewModel.signUpUser(
+                            nameValue.value,
+                            emailValue.value,
+                            passwordValue.value,
+                            confirmPasswordValue.value)
+                    }
+                },
+
                     modifier = Modifier
                         .padding(5.dp)
                         .width(150.dp)
@@ -170,6 +187,7 @@ fun RegisterationPage(navController: NavController){
                     Text(text = "Sign up",fontSize =14.sp,color = MaterialTheme
                         .colors.onPrimary)
                 }
+
 
                 Spacer(modifier = Modifier.padding(20.dp))
                 Text(text = "Already have account? Sign in",

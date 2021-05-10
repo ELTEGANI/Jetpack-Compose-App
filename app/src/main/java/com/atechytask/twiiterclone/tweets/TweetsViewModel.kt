@@ -35,4 +35,12 @@ class TweetsViewModel @Inject constructor(
         }
     }
 
+     fun signUpUser(name:String,email:String,password:String,confirmPassword:String){
+        viewModelScope.launch {
+            repository.signUpUser(name,email,password,confirmPassword)
+        }
+    }
+
+
+
 }

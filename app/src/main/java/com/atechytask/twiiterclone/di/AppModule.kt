@@ -15,4 +15,10 @@ object AppModule {
     fun provideQueryTweets() = FirebaseFirestore.getInstance()
         .collection("tweets")
         .orderBy("tweets")
+
+    @Singleton
+    @Provides
+    fun provideFirebaseFirestore(): FirebaseFirestore {
+        return FirebaseFirestore.getInstance()
+    }
 }
