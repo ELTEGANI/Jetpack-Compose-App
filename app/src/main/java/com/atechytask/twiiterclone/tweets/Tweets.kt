@@ -86,6 +86,7 @@ class Tweets : AppCompatActivity() {
                 isDisplayed = viewModel.loading.value
             )
         }
+
     }
 }
 

@@ -2,12 +2,15 @@ package com.atechytask.twiiterclone.tweets
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.atechytask.twiiterclone.data.DataOrException
 import com.atechytask.twiiterclone.data.Tweets
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 
@@ -15,13 +18,16 @@ import javax.inject.Inject
 class TweetsViewModel @Inject constructor(
     private val repository: TweetsRepository
 ): ViewModel() {
-    var loading = mutableStateOf(false)
-    val data: MutableState<DataOrException<List<Tweets>, Exception>> = mutableStateOf(
+    var loading    = mutableStateOf(false)
+    var navigateTo = mutableStateOf(false)
+
+    private val data: MutableState<DataOrException<List<Tweets>, Exception>> = mutableStateOf(
         DataOrException(
             listOf(),
             Exception("")
         )
     )
+
 
     init {
         getAllTweets()
@@ -37,10 +43,13 @@ class TweetsViewModel @Inject constructor(
 
      fun signUpUser(name:String,email:String,password:String,confirmPassword:String){
         viewModelScope.launch {
-            repository.signUpUser(name,email,password,confirmPassword)
+            try {
+                navigateTo.value = true
+                repository.signUpUser(name,email,password,confirmPassword)
+            }catch (io: IOException){
+                navigateTo.value = false
+            }
         }
     }
-
-
 
 }
