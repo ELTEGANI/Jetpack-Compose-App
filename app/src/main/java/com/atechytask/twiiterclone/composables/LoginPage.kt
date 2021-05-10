@@ -76,7 +76,11 @@ fun LoginPage(){
                       onValueChange = {emailValue.value =  it },
                       leadingIcon = { Icon(Icons.Default.Email, "")},
                       colors = TextFieldDefaults.textFieldColors(
-                          backgroundColor = Color.White
+                          disabledIndicatorColor = Color.Transparent,
+                          backgroundColor = Color.White,
+                          unfocusedIndicatorColor = Color.Transparent,
+                          focusedIndicatorColor = Color.Transparent,
+
                       ),
                       placeholder = {Text(text = "Email")},
                       modifier = Modifier
@@ -93,7 +97,10 @@ fun LoginPage(){
                         value =  passwordValue.value,
                         leadingIcon = { Icon(Icons.Default.Lock, "")},
                         colors = TextFieldDefaults.textFieldColors(
-                            backgroundColor = Color.White
+                            disabledIndicatorColor = Color.Transparent,
+                            backgroundColor = Color.White,
+                            unfocusedIndicatorColor = Color.Transparent,
+                            focusedIndicatorColor = Color.Transparent,
                         ),
                         onValueChange = {passwordValue.value =  it },
                         visualTransformation = PasswordVisualTransformation(),
@@ -117,12 +124,13 @@ fun LoginPage(){
                             .height(50.dp),
                         shape = RoundedCornerShape(20.dp)
                     ) {
-                         Text(text = "Sign In",fontSize =14.sp,color = MaterialTheme
+                         Text(text = "Sign in",fontSize =14.sp,color = MaterialTheme
                              .colors.onPrimary)
                     }
 
                     Spacer(modifier = Modifier.padding(20.dp))
-                    Text(text = "Don't Have a Teamio Account Yet? Sign Up",modifier = Modifier.clickable(onClick={}))
+                    Text(text = "Don't have a Teamio account Yet? Sign Up",
+                        modifier = Modifier.clickable(onClick={}))
                     Spacer(modifier = Modifier.padding(20.dp))
 
                 }
