@@ -43,12 +43,8 @@ class TweetsViewModel @Inject constructor(
 
      fun signUpUser(name:String,email:String,password:String,confirmPassword:String){
         viewModelScope.launch {
-            try {
-                navigateToRegisteration.value = true
+            navigateToRegisteration.value =
                 repository.signUpUser(name,email,password,confirmPassword)
-            }catch (io: IOException){
-                navigateToRegisteration.value = false
-            }
         }
     }
 

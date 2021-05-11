@@ -4,12 +4,10 @@ import android.util.Log
 import com.atechytask.twiiterclone.data.DataOrException
 import com.atechytask.twiiterclone.data.SignUp
 import com.atechytask.twiiterclone.data.Tweets
-import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.*
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Singleton
-import com.google.firebase.firestore.QuerySnapshot
 
 
 
@@ -30,15 +28,16 @@ class TweetsRepository @Inject constructor(
         return dataOrException
     }
 
-    fun signUpUser(name: String,email: String,password: String,confirmPassword:String) {
-        val dbUser: CollectionReference = firebaseFirestore.collection("users")
-        val signUp = SignUp(name,email,password,confirmPassword)
-        dbUser.add(signUp).addOnSuccessListener {
-            Log.d("data",it.toString())
+    suspend fun signUpUser(name: String,email: String,password: String,confirmPassword:String) :Boolean{
+        var isSignUp = false
+        try {
+            val dbUser: CollectionReference = firebaseFirestore.collection("users")
+            val signUp = SignUp(name,email,password,confirmPassword)
+            dbUser.add(signUp).await()
+            isSignUp = true
+        }catch (e: FirebaseFirestoreException){
         }
-        .addOnFailureListener { e ->
-            Log.d("data",e.toString())
-        }
+        return isSignUp
     }
 
 
