@@ -2,8 +2,6 @@ package com.atechytask.twiiterclone.tweets
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.atechytask.twiiterclone.data.DataOrException
@@ -13,21 +11,23 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
 
+import android.util.Log
+
 
 @HiltViewModel
 class TweetsViewModel @Inject constructor(
     private val repository: TweetsRepository
 ): ViewModel() {
-    var loading    = mutableStateOf(false)
-    var navigateTo = mutableStateOf(false)
+    var loading                 = mutableStateOf(false)
+    var navigateToRegisteration = mutableStateOf(false)
+    var navigateToTweetsPage    = mutableStateOf(false)
 
-    private val data: MutableState<DataOrException<List<Tweets>, Exception>> = mutableStateOf(
+    val data: MutableState<DataOrException<List<Tweets>, Exception>> = mutableStateOf(
         DataOrException(
             listOf(),
             Exception("")
         )
     )
-
 
     init {
         getAllTweets()
@@ -44,11 +44,17 @@ class TweetsViewModel @Inject constructor(
      fun signUpUser(name:String,email:String,password:String,confirmPassword:String){
         viewModelScope.launch {
             try {
-                navigateTo.value = true
+                navigateToRegisteration.value = true
                 repository.signUpUser(name,email,password,confirmPassword)
             }catch (io: IOException){
-                navigateTo.value = false
+                navigateToRegisteration.value = false
             }
+        }
+    }
+
+    fun signInUser(userEmail: String,userPassword:String){
+        viewModelScope.launch {
+            navigateToTweetsPage.value = repository.signInUser(userEmail,userPassword)
         }
     }
 

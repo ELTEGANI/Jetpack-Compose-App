@@ -26,9 +26,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import com.atechytask.twiiterclone.R
@@ -53,7 +50,6 @@ fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
     }
 
     val context = LocalContext.current
-
 
 
     Box(modifier = Modifier.fillMaxSize(),contentAlignment = Alignment.BottomCenter){
@@ -203,7 +199,7 @@ fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
             }
         }
     }
-    if (viewModel.navigateTo.value){
+    if (viewModel.navigateToRegisteration.value){
       navController.navigate("login_page"){
           popUpTo = navController.graph.startDestination
           launchSingleTop = true
