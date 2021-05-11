@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
+import androidx.navigation.compose.popUpTo
 import com.atechytask.twiiterclone.R
 import com.atechytask.twiiterclone.tweets.TweetsViewModel
 
@@ -155,7 +156,9 @@ fun LoginPage(navController: NavController,tweetsViewModel: TweetsViewModel){
     }
 
     if (tweetsViewModel.navigateToTweetsPage.value){
-        navController.navigate("tweets_page")
+        navController.navigate("tweets_page"){
+            popUpTo("login_page") { inclusive = true }
+        }
     }
 
 }

@@ -1,6 +1,5 @@
 package com.atechytask.twiiterclone.tweets
 
-import android.util.Log
 import com.atechytask.twiiterclone.data.DataOrException
 import com.atechytask.twiiterclone.data.SignUp
 import com.atechytask.twiiterclone.data.Tweets
@@ -46,7 +45,6 @@ class TweetsRepository @Inject constructor(
         try {
             val credentials  =
                 firebaseFirestore.collection("users").get().await().toObjects(SignUp::class.java)
-            Log.d("credentials",credentials.toString())
             credentials.forEach{doc->
                 if (doc.email.equals(userEmail.trim(), ignoreCase = true) &&
                     doc.password.equals(userPassword.trim(), ignoreCase = true)
