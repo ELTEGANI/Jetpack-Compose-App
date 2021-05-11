@@ -1,5 +1,6 @@
 package com.atechytask.twiiterclone.composables
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -20,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
@@ -32,16 +34,18 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import com.atechytask.twiiterclone.R
+import com.atechytask.twiiterclone.tweets.TweetsViewModel
 
 
 @Composable
-fun LoginPage(navController: NavController){
+fun LoginPage(navController: NavController,tweetsViewModel: TweetsViewModel){
     val emailValue = remember {
         mutableStateOf("")
     }
     val passwordValue = remember {
         mutableStateOf("")
     }
+    val context = LocalContext.current
 
     Box(modifier = Modifier.fillMaxSize(),contentAlignment = Alignment.BottomCenter){
         Box(modifier = Modifier
@@ -119,7 +123,13 @@ fun LoginPage(navController: NavController){
                     val mainButtonColor = ButtonDefaults.buttonColors(
                         backgroundColor = MaterialTheme.colors.secondary
                     )
-                    Button(colors = mainButtonColor,onClick ={},
+                    Button(colors = mainButtonColor,onClick ={
+                        if (emailValue.value.isEmpty() ||passwordValue.value.isEmpty()){
+                            Toast.makeText(context,"Please Fill Empty Field", Toast.LENGTH_SHORT).show()
+                        }else{
+                            tweetsViewModel.signInUser(emailValue.value,passwordValue.value)
+                        }
+                    },
                         modifier = Modifier
                             .padding(5.dp)
                             .width(150.dp)
@@ -143,5 +153,10 @@ fun LoginPage(navController: NavController){
                 }
         }
     }
+
+    if (tweetsViewModel.navigateToTweetsPage.value){
+        navController.navigate("tweets_page")
+    }
+
 }
 
