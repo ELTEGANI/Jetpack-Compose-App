@@ -49,10 +49,6 @@ fun LoginPage(navController: NavController,tweetsViewModel: TweetsViewModel){
     val context = LocalContext.current
 
     Box(modifier = Modifier.fillMaxSize(),contentAlignment = Alignment.BottomCenter){
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White),contentAlignment = Alignment.TopCenter){
-        }
         Column (
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
@@ -144,7 +140,7 @@ fun LoginPage(navController: NavController,tweetsViewModel: TweetsViewModel){
                     Spacer(modifier = Modifier.padding(20.dp))
                     Text(text = "Don't have a Teamio account Yet? Sign Up",
                         modifier = Modifier.clickable(onClick={
-                            navController.navigate("registeraton_page"){
+                            navController.navigate("registeration_page"){
                                 popUpTo = navController.graph.startDestination
                                 launchSingleTop = true
                             }

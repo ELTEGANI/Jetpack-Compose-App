@@ -7,19 +7,16 @@ import androidx.lifecycle.viewModelScope
 import com.atechytask.twiiterclone.data.DataOrException
 import com.atechytask.twiiterclone.data.Tweets
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
-import java.io.IOException
 import javax.inject.Inject
-
-import android.util.Log
 
 
 @HiltViewModel
 class TweetsViewModel @Inject constructor(
     private val repository: TweetsRepository
 ): ViewModel() {
-    var loading                 = mutableStateOf(false)
-    var navigateToRegisteration = mutableStateOf(false)
+    var navigateToRegisterationPage = mutableStateOf(false)
     var navigateToTweetsPage    = mutableStateOf(false)
 
     val data: MutableState<DataOrException<List<Tweets>, Exception>> = mutableStateOf(
@@ -29,21 +26,24 @@ class TweetsViewModel @Inject constructor(
         )
     )
 
-    init {
-        getAllTweets()
-    }
+//    init {
+//        getAllTweets()
+//    }
+//
+//    private fun getAllTweets() {
+//        viewModelScope.launch {
+//            loading.value = true
+//            data.value = repository.getTweetsFromFirestore()
+//            loading.value = false
+//        }
+//    }
 
-    private fun getAllTweets() {
-        viewModelScope.launch {
-            loading.value = true
-            data.value = repository.getTweetsFromFirestore()
-            loading.value = false
-        }
-    }
+    @ExperimentalCoroutinesApi
+    fun getTweets() = repository.getTweetsFromFirestore()
 
-     fun signUpUser(name:String,email:String,password:String,confirmPassword:String){
+    fun signUpUser(name:String,email:String,password:String,confirmPassword:String){
         viewModelScope.launch {
-            navigateToRegisteration.value =
+            navigateToRegisterationPage.value =
                 repository.signUpUser(name,email,password,confirmPassword)
         }
     }

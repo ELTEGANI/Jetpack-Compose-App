@@ -1,9 +1,14 @@
 package com.atechytask.twiiterclone.tweets
 
-import com.atechytask.twiiterclone.data.DataOrException
 import com.atechytask.twiiterclone.data.SignUp
 import com.atechytask.twiiterclone.data.Tweets
+import com.atechytask.twiiterclone.utils.State
 import com.google.firebase.firestore.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -12,19 +17,20 @@ import javax.inject.Singleton
 
 @Singleton
 class TweetsRepository @Inject constructor(
-    private val queryTweets: Query,
+    private val query: Query,
     private val firebaseFirestore: FirebaseFirestore
 ) {
-    suspend fun getTweetsFromFirestore(): DataOrException<List<Tweets>, Exception> {
-        val dataOrException = DataOrException<List<Tweets>, Exception>()
-        try {
-            dataOrException.data = queryTweets.get().await().map { document ->
-                document.toObject(Tweets::class.java)
+
+    @ExperimentalCoroutinesApi
+    fun getTweetsFromFirestore() = callbackFlow {
+        val subscription = query.addSnapshotListener { snapshot, exception ->
+            exception?.let {
+                offer(State.Failed(it.message.toString()))
+                cancel(it.message.toString())
             }
-        } catch (e: FirebaseFirestoreException) {
-            dataOrException.e = e
+                offer(State.Success(snapshot))
         }
-        return dataOrException
+        awaitClose { subscription.remove() }
     }
 
     suspend fun signUpUser(name: String,email: String,password: String,confirmPassword:String) :Boolean{

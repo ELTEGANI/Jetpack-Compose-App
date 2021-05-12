@@ -53,10 +53,6 @@ fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
 
 
     Box(modifier = Modifier.fillMaxSize(),contentAlignment = Alignment.BottomCenter){
-        Box(modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White),contentAlignment = Alignment.TopCenter){
-        }
         Column (
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
@@ -199,7 +195,7 @@ fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
             }
         }
     }
-    if (viewModel.navigateToRegisteration.value){
+    if (viewModel.navigateToRegisterationPage.value){
       navController.navigate("login_page"){
           popUpTo = navController.graph.startDestination
           launchSingleTop = true
