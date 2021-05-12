@@ -31,8 +31,8 @@ class TweetsActivity : AppCompatActivity() {
         val navController = rememberNavController()
         NavHost(navController = navController, startDestination = "login_page",builder = {
              composable("login_page",content = { LoginPage(navController = navController,viewModel)})
-             composable("registeraton_page",content = { RegisterationPage(navController = navController,viewModel)})
-            composable("tweets_page",content = { TweetsPage(viewModel.data.value) })
+             composable("registeration_page",content = { RegisterationPage(navController = navController,viewModel)})
+            composable("tweets_page",content = { TweetsPage(viewModel) })
 
         })
     }
