@@ -1,14 +1,15 @@
 package com.atechytask.twiiterclone.tweets
 
+import com.atechytask.twiiterclone.data.DataOrException
 import com.atechytask.twiiterclone.data.SignUp
 import com.atechytask.twiiterclone.data.Tweets
 import com.atechytask.twiiterclone.utils.State
 import com.google.firebase.firestore.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -62,5 +63,15 @@ class TweetsRepository @Inject constructor(
         }
         return isCorrectCredentials
     }
+
+
+    fun addTweetPost(tweets: Tweets) = flow<State<DocumentReference>> {
+        emit(State.Loading())
+        val postRef = firebaseFirestore.collection("tweets").add(tweets).await()
+        emit(State.Success(postRef))
+    }.catch {
+        // If exception is thrown, emit failed state along with message.
+        emit(State.Failed(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
 
 }
