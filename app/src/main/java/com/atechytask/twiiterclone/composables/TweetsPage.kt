@@ -196,7 +196,7 @@ fun TweetsDetails(tweets: Tweets) {
                     data = it,
                     contentDescription = "Profile Image",
                     modifier = Modifier
-                        .size(80.dp)
+                        .size(100.dp)
                         .clip(CircleShape),
                     contentScale = ContentScale.Inside
                 )
