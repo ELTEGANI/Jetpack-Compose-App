@@ -83,7 +83,7 @@ fun TweetsPage(tweetsViewModel: TweetsViewModel) {
     Column(Modifier.fillMaxHeight()) {
             Column(
                 modifier = Modifier
-                    .padding(vertical = 5.dp)
+                    .padding(vertical = 0.dp)
             ) {
                 TweetList(tweetsViewModel)
             }
@@ -103,6 +103,7 @@ fun TweetsPage(tweetsViewModel: TweetsViewModel) {
                         Modifier
                             .padding(start = 10.dp, top = 10.dp, bottom = 16.dp
                             ,end = 10.dp)
+                           .clip(CircleShape)
                     )
                     Box(
                         modifier = Modifier
@@ -252,13 +253,19 @@ fun chooseUserImage(imageTag:Int) : Int{
     var imageId = 0
     when(imageTag){
         0 ->{
-            imageId = R.drawable.img_1
+            imageId = R.drawable.img_0
         }
         1 ->{
-            imageId = R.drawable.img
+            imageId = R.drawable.img_1
         }
         2 ->{
             imageId = R.drawable.img_2
+        }
+        3 ->{
+            imageId = R.drawable.img_3
+        }
+        4 ->{
+            imageId = R.drawable.img_4
         }
     }
     return  imageId
