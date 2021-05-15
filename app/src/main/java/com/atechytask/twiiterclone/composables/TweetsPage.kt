@@ -35,6 +35,7 @@ import com.atechytask.twiiterclone.utils.State
 import com.google.accompanist.coil.CoilImage
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
+import kotlin.random.Random
 
 
 @InternalCoroutinesApi
@@ -142,7 +143,8 @@ fun TweetsPage(tweetsViewModel: TweetsViewModel) {
                                         }else{
                                       uiScope.launch {
                                           addPost(tweetsViewModel,Tweets(user_name = "Tegani",
-                                          tweets = "Hooray",image_url = "kljsd;lkjf"),context)
+                                          tweets = tweetValue.value,imageTag =
+                                              Random.nextInt(0, 2)),context)
                                       }
                                         }
                                     }
@@ -189,14 +191,16 @@ fun TweetsDetails(tweets: Tweets) {
                 thickness = 0.25.dp
             )
         Row(modifier = Modifier.padding(horizontal = 12.dp)) {
-            CoilImage(
-                data = tweets.image_url.toString(),
-                contentDescription = "Profile Image",
-                modifier = Modifier
-                    .size(80.dp)
-                    .clip(CircleShape),
-                contentScale = ContentScale.Crop
-            )
+            tweets.imageTag?.let { chooseUserImage(it) }?.let {
+                CoilImage(
+                    data = it,
+                    contentDescription = "Profile Image",
+                    modifier = Modifier
+                        .size(80.dp)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Inside
+                )
+            }
             Column(
                 modifier = Modifier.padding(start = 10.dp)
             ) {
@@ -241,4 +245,21 @@ fun TweetsDetails(tweets: Tweets) {
           }
       }
     }
+}
+
+
+fun chooseUserImage(imageTag:Int) : Int{
+    var imageId = 0
+    when(imageTag){
+        0 ->{
+            imageId = R.drawable.img_1
+        }
+        1 ->{
+            imageId = R.drawable.img
+        }
+        2 ->{
+            imageId = R.drawable.img_2
+        }
+    }
+    return  imageId
 }

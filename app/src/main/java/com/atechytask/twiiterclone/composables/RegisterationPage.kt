@@ -38,6 +38,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.lang.Math.random
+import kotlin.random.Random
 
 @InternalCoroutinesApi
 @Composable
