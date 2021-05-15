@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.atechytask.twiiterclone.composables.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
 
 
 @AndroidEntryPoint
@@ -19,6 +20,7 @@ class TweetsActivity : AppCompatActivity() {
 
     private val viewModel: TweetsViewModel by viewModels()
 
+    @InternalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -26,10 +28,11 @@ class TweetsActivity : AppCompatActivity() {
         }
     }
 
+    @InternalCoroutinesApi
     @Composable
     fun StartUpApplication(){
         val navController = rememberNavController()
-        NavHost(navController = navController, startDestination = "tweets_page",builder = {
+        NavHost(navController = navController, startDestination = "login_page",builder = {
              composable("login_page",content = { LoginPage(navController = navController,viewModel)})
              composable("registeration_page",content = { RegisterationPage(navController = navController,viewModel)})
             composable("tweets_page",content = { TweetsPage(viewModel) })

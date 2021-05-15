@@ -1,0 +1,30 @@
+Index: app/src/main/java/com/atechytask/twiiterclone/tweets/TweetsViewModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.atechytask.twiiterclone.tweets\n\nimport androidx.compose.runtime.MutableState\nimport androidx.compose.runtime.mutableStateOf\nimport androidx.lifecycle.ViewModel\nimport androidx.lifecycle.viewModelScope\nimport com.atechytask.twiiterclone.data.DataOrException2\nimport com.atechytask.twiiterclone.data.Tweets\nimport dagger.hilt.android.lifecycle.HiltViewModel\nimport kotlinx.coroutines.ExperimentalCoroutinesApi\nimport kotlinx.coroutines.launch\nimport javax.inject.Inject\n\n\n@HiltViewModel\nclass TweetsViewModel @Inject constructor(\n    private val repository: TweetsRepository\n): ViewModel() {\n    var navigateToRegisterationPage = mutableStateOf(false)\n    var navigateToTweetsPage    = mutableStateOf(false)\n    val postTweet = mutableStateOf(false)\n\n\n    @ExperimentalCoroutinesApi\n    fun getTweets() = repository.getTweetsFromFirestore()\n\n    fun addReply(tweets: Tweets) = repository.addTweetPost(tweets)\n\n\n    fun signUpUser(name:String,email:String,password:String,confirmPassword:String){\n        viewModelScope.launch {\n            navigateToRegisterationPage.value =\n                repository.signUpUser(name,email,password,confirmPassword)\n        }\n    }\n\n    fun signInUser(userEmail: String,userPassword:String){\n        viewModelScope.launch {\n            navigateToTweetsPage.value = repository.signInUser(userEmail,userPassword)\n        }\n    }\n\n//     fun addTweetReply(name:String, tweets:String, image:String) {\n//        viewModelScope.launch {\n//            postTweet.value = repository.addTweets(name,tweets,image)\n//        }\n//    }\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/atechytask/twiiterclone/tweets/TweetsViewModel.kt b/app/src/main/java/com/atechytask/twiiterclone/tweets/TweetsViewModel.kt
+--- a/app/src/main/java/com/atechytask/twiiterclone/tweets/TweetsViewModel.kt	(revision f040ff2f2c3ae23747dde197324f1be115cd5daa)
++++ b/app/src/main/java/com/atechytask/twiiterclone/tweets/TweetsViewModel.kt	(date 1621087457887)
+@@ -18,7 +18,6 @@
+ ): ViewModel() {
+     var navigateToRegisterationPage = mutableStateOf(false)
+     var navigateToTweetsPage    = mutableStateOf(false)
+-    val postTweet = mutableStateOf(false)
+ 
+ 
+     @ExperimentalCoroutinesApi
+@@ -40,10 +39,4 @@
+         }
+     }
+ 
+-//     fun addTweetReply(name:String, tweets:String, image:String) {
+-//        viewModelScope.launch {
+-//            postTweet.value = repository.addTweets(name,tweets,image)
+-//        }
+-//    }
+-
+ }
+\ No newline at end of file

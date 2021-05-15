@@ -1,5 +1,6 @@
 package com.atechytask.twiiterclone.composables
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -29,8 +30,16 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import com.atechytask.twiiterclone.R
+import com.atechytask.twiiterclone.data.SignUp
 import com.atechytask.twiiterclone.tweets.TweetsViewModel
+import com.atechytask.twiiterclone.utils.State
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
+@InternalCoroutinesApi
 @Composable
 fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
 
@@ -51,6 +60,7 @@ fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
     }
 
     val context = LocalContext.current
+    val uiScope = CoroutineScope(Dispatchers.Main)
 
 
     Box(modifier = Modifier.fillMaxSize(),contentAlignment = Alignment.BottomCenter){
@@ -165,11 +175,15 @@ fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
                         confirmPasswordValue.value.isEmpty()){
                         Toast.makeText(context,"Please Fill Empty Field",Toast.LENGTH_SHORT).show()
                     }else{
-                        viewModel.signUpUser(
-                            nameValue.value,
-                            emailValue.value,
-                            passwordValue.value,
-                            confirmPasswordValue.value)
+                        uiScope.launch {
+                            signUp(
+                                viewModel, SignUp(
+                                    name = nameValue.value,
+                                    email = emailValue.value,
+                                    password = passwordValue.value,
+                                    confirmedPassword = confirmPasswordValue.value
+                                ), context,navController)
+                        }
                     }
                 },
                     modifier = Modifier
@@ -194,11 +208,26 @@ fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
             }
         }
     }
-    if (viewModel.navigateToRegisterationPage.value){
-      navController.navigate("login_page"){
-          popUpTo = navController.graph.startDestination
-          launchSingleTop = true
-      }
-    }
+}
 
+@InternalCoroutinesApi
+suspend fun signUp(
+    tweetsViewModel: TweetsViewModel,
+    signUp: SignUp,
+    context: Context,
+    navController: NavController
+) {
+    tweetsViewModel.signUp(signUp).collect {state->
+        when(state){
+            is State.Success -> {
+                navController.navigate("login_page"){
+                    popUpTo = navController.graph.startDestination
+                    launchSingleTop = true
+                }
+            }
+            is State.Failed -> {
+                Toast.makeText(context,state.message, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 }

@@ -34,35 +34,28 @@ class TweetsRepository @Inject constructor(
         awaitClose { subscription.remove() }
     }
 
-    suspend fun signUpUser(name: String,email: String,password: String,confirmPassword:String) :Boolean{
-        var isSignUp = false
-        try {
-            val dbUser: CollectionReference = firebaseFirestore.collection("users")
-            val signUp = SignUp(name,email,password,confirmPassword)
-            dbUser.add(signUp).await()
-            isSignUp = true
-        }catch (e: FirebaseFirestoreException){
-        }
-        return isSignUp
-    }
-
-
-    suspend fun signInUser(userEmail:String,userPassword:String): Boolean {
-        var isCorrectCredentials = false
-        try {
-            val credentials  =
-                firebaseFirestore.collection("users").get().await().toObjects(SignUp::class.java)
-            credentials.forEach{doc->
-                if (doc.email.equals(userEmail.trim(), ignoreCase = true) &&
-                    doc.password.equals(userPassword.trim(), ignoreCase = true)
-                ) {
-                    isCorrectCredentials = true
-                }
+    fun signInUser(userEmail:String,userPassword:String) = flow<State<Boolean>> {
+        emit(State.Loading())
+        val snapshot = firebaseFirestore.collection("users").get().await()
+        val signUpSnapshot = snapshot.toObjects(SignUp::class.java)
+        signUpSnapshot.forEach {doc->
+            if (doc.email.equals(userEmail.trim(), ignoreCase = true) &&
+                    doc.password.equals(userPassword.trim(), ignoreCase = true)) {
+                emit(State.Success(true))
             }
-        }catch (e: FirebaseFirestoreException){
         }
-        return isCorrectCredentials
-    }
+    }.catch {
+        emit(State.Failed(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
+
+
+    fun signUpUser(signUp: SignUp) = flow<State<DocumentReference>> {
+        emit(State.Loading())
+        val usersRef = firebaseFirestore.collection("users").add(signUp).await()
+        emit(State.Success(usersRef))
+    }.catch {
+        emit(State.Failed(it.message.toString()))
+    }.flowOn(Dispatchers.IO)
 
 
     fun addTweetPost(tweets: Tweets) = flow<State<DocumentReference>> {

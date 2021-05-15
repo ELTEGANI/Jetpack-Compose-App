@@ -1,5 +1,6 @@
 package com.atechytask.twiiterclone.composables
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,11 +21,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -36,8 +35,15 @@ import androidx.navigation.compose.navigate
 import androidx.navigation.compose.popUpTo
 import com.atechytask.twiiterclone.R
 import com.atechytask.twiiterclone.tweets.TweetsViewModel
+import com.atechytask.twiiterclone.utils.State
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 
+@InternalCoroutinesApi
 @Composable
 fun LoginPage(navController: NavController,tweetsViewModel: TweetsViewModel){
     val emailValue = remember {
@@ -47,6 +53,7 @@ fun LoginPage(navController: NavController,tweetsViewModel: TweetsViewModel){
         mutableStateOf("")
     }
     val context = LocalContext.current
+    val uiScope = CoroutineScope(Dispatchers.Main)
 
     Box(modifier = Modifier.fillMaxSize(),contentAlignment = Alignment.BottomCenter){
         Column (
@@ -124,7 +131,10 @@ fun LoginPage(navController: NavController,tweetsViewModel: TweetsViewModel){
                         if (emailValue.value.isEmpty() ||passwordValue.value.isEmpty()){
                             Toast.makeText(context,"Please Fill Empty Field", Toast.LENGTH_SHORT).show()
                         }else{
-                            tweetsViewModel.signInUser(emailValue.value,passwordValue.value)
+                           uiScope.launch {
+                               signInUser(tweetsViewModel,
+                                   emailValue.value,passwordValue.value,context,navController)
+                           }
                         }
                     },
                         modifier = Modifier
@@ -150,12 +160,29 @@ fun LoginPage(navController: NavController,tweetsViewModel: TweetsViewModel){
                 }
         }
     }
+}
 
-    if (tweetsViewModel.navigateToTweetsPage.value){
-        navController.navigate("tweets_page"){
-            popUpTo("login_page") { inclusive = true }
+@InternalCoroutinesApi
+suspend fun signInUser(
+    tweetsViewModel: TweetsViewModel,
+    email: String,
+    passWord: String,
+    context: Context,
+    navController: NavController
+) {
+    tweetsViewModel.signIn(email,passWord).collect {state->
+        when(state){
+            is State.Success -> {
+                if(state.data) {
+                    navController.navigate("tweets_page") {
+                        popUpTo("login_page") { inclusive = true }
+                    }
+                }
+            }
+            is State.Failed -> {
+                Toast.makeText(context,state.message, Toast.LENGTH_SHORT).show()
+            }
         }
     }
-
 }
 
