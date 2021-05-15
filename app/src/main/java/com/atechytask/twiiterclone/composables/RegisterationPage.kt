@@ -37,6 +37,7 @@ fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
     val nameValue = remember {
         mutableStateOf("")
     }
+
     val emailValue = remember {
         mutableStateOf("")
     }
@@ -64,16 +65,14 @@ fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
                 .padding(10.dp)
         ){
             val image: Painter = painterResource(id = R.drawable.logo)
-            Image(painter = image,
-                contentDescription = ""
-            )
+            Image(painter = image,contentDescription = "")
             Spacer(modifier = Modifier.padding(20.dp))
             Text(
                 text = "Create your Account",
                 style = TextStyle(
                     fontWeight = FontWeight.Bold,
-                    letterSpacing = 2.sp
-                ),fontSize = 20.sp
+                    letterSpacing = 2.sp),
+                fontSize = 20.sp
             )
 
             Spacer(modifier = Modifier.padding(20.dp))
