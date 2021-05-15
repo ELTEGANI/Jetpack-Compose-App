@@ -4,7 +4,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.atechytask.twiiterclone.data.DataOrException
+import com.atechytask.twiiterclone.data.DataOrException2
 import com.atechytask.twiiterclone.data.Tweets
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,17 +18,14 @@ class TweetsViewModel @Inject constructor(
 ): ViewModel() {
     var navigateToRegisterationPage = mutableStateOf(false)
     var navigateToTweetsPage    = mutableStateOf(false)
-
-    val data: MutableState<DataOrException<List<Tweets>, Exception>> = mutableStateOf(
-        DataOrException(
-            listOf(),
-            Exception("")
-        )
-    )
+    val postTweet = mutableStateOf(false)
 
 
     @ExperimentalCoroutinesApi
     fun getTweets() = repository.getTweetsFromFirestore()
+
+    fun addReply(tweets: Tweets) = repository.addTweetPost(tweets)
+
 
     fun signUpUser(name:String,email:String,password:String,confirmPassword:String){
         viewModelScope.launch {
@@ -42,5 +39,11 @@ class TweetsViewModel @Inject constructor(
             navigateToTweetsPage.value = repository.signInUser(userEmail,userPassword)
         }
     }
+
+//     fun addTweetReply(name:String, tweets:String, image:String) {
+//        viewModelScope.launch {
+//            postTweet.value = repository.addTweets(name,tweets,image)
+//        }
+//    }
 
 }
