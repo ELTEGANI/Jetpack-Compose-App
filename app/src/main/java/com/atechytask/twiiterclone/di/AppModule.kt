@@ -14,7 +14,8 @@ object AppModule {
     @Singleton
     fun provideQueryTweets() = FirebaseFirestore.getInstance()
         .collection("tweets")
-        .orderBy("tweets")
+        .orderBy("user_name")
+
 
     @Singleton
     @Provides

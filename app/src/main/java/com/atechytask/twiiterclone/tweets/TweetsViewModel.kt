@@ -26,17 +26,6 @@ class TweetsViewModel @Inject constructor(
         )
     )
 
-//    init {
-//        getAllTweets()
-//    }
-//
-//    private fun getAllTweets() {
-//        viewModelScope.launch {
-//            loading.value = true
-//            data.value = repository.getTweetsFromFirestore()
-//            loading.value = false
-//        }
-//    }
 
     @ExperimentalCoroutinesApi
     fun getTweets() = repository.getTweetsFromFirestore()
