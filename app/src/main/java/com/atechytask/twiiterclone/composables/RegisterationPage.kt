@@ -22,6 +22,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -90,15 +91,13 @@ fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
             Spacer(modifier = Modifier.padding(20.dp))
 
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                TextField(value =nameValue.value,
+                OutlinedTextField(value =nameValue.value,
                     onValueChange = {nameValue.value =  it },
                     colors = TextFieldDefaults.textFieldColors(
                         disabledIndicatorColor = Color.Transparent,
                         backgroundColor = Color.White,
                         unfocusedIndicatorColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-
-                        ),
+                        focusedIndicatorColor = Color.Transparent),
                     placeholder = { Text(text = "Name") },
                     modifier = Modifier
                         .fillMaxWidth(8.8f)
@@ -110,7 +109,7 @@ fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
                 )
                 Spacer(modifier = Modifier.padding(15.dp))
 
-                TextField(
+                OutlinedTextField(
                     value =  emailValue.value,
                     colors = TextFieldDefaults.textFieldColors(
                         disabledIndicatorColor = Color.Transparent,
@@ -129,7 +128,7 @@ fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
 
                 Spacer(modifier = Modifier.padding(15.dp))
 
-                TextField(
+                OutlinedTextField(
                     value =  passwordValue.value,
                     colors = TextFieldDefaults.textFieldColors(
                         disabledIndicatorColor = Color.Transparent,
@@ -149,7 +148,7 @@ fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
 
                 Spacer(modifier = Modifier.padding(15.dp))
 
-                TextField(
+                OutlinedTextField(
                     value =  confirmPasswordValue.value,
                     colors = TextFieldDefaults.textFieldColors(
                         disabledIndicatorColor = Color.Transparent,
@@ -194,18 +193,26 @@ fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
                         .height(50.dp),
                     shape = RoundedCornerShape(20.dp)
                 ) {
-                    Text(text = "Sign up",fontSize =14.sp,color = MaterialTheme
-                        .colors.onPrimary)
+                    Text(text = "Sign up",fontSize =16.sp,color = Color.Black)
                 }
 
                 Spacer(modifier = Modifier.padding(20.dp))
-                Text(text = "Already have account? Sign in",
-                    modifier = Modifier.clickable(onClick={
-                        navController.navigate("login_page"){
-                            popUpTo = navController.graph.startDestination
-                            launchSingleTop = true
+                 Column(
+                        modifier = Modifier.padding(start = 10.dp)
+                    ) {
+                        Row (verticalAlignment = Alignment.CenterVertically){
+                            Text(text = "Already have account ?")
+                            Text(
+                                text = " Sign in",  modifier = Modifier.clickable(onClick = {
+                                    navController.navigate("login_page") {
+                                        popUpTo = navController.graph.startDestination
+                                        launchSingleTop = true
+                                    }
+                                }),
+                                fontSize = 16.sp, color = Color.Black,
+                                fontWeight = Bold)
                         }
-                    }))
+                    }
                 Spacer(modifier = Modifier.padding(20.dp))
             }
         }
