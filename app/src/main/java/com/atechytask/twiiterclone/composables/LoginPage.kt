@@ -24,7 +24,10 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -143,20 +146,29 @@ fun LoginPage(navController: NavController,tweetsViewModel: TweetsViewModel){
                             .height(50.dp),
                         shape = RoundedCornerShape(20.dp)
                     ) {
-                         Text(text = "Sign in",fontSize =14.sp,color = MaterialTheme
+                         Text(text = "Sign in",
+                             fontSize =14.sp,color = MaterialTheme
                              .colors.onPrimary)
                     }
 
                     Spacer(modifier = Modifier.padding(20.dp))
-                    Text(text = "Don't have a Teamio account Yet? Sign Up",
-                        modifier = Modifier.clickable(onClick={
-                            navController.navigate("registeration_page"){
-                                popUpTo = navController.graph.startDestination
-                                launchSingleTop = true
-                            }
-                        }))
-                    Spacer(modifier = Modifier.padding(20.dp))
-
+                    Column(
+                        modifier = Modifier.padding(start = 10.dp)
+                    ) {
+                        Row (
+                            verticalAlignment = Alignment.CenterVertically){
+                            Text(text = "Don't have a Teamio account Yet?")
+                            Text(
+                                text = " Sign Up", modifier = Modifier.clickable(onClick = {
+                                    navController.navigate("registeration_page") {
+                                        popUpTo = navController.graph.startDestination
+                                        launchSingleTop = true
+                                    }
+                                }),
+                                fontSize = 16.sp, color = Color.Black,
+                                fontWeight = Bold)
+                        }
+                    }
                 }
         }
     }
