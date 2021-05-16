@@ -124,9 +124,10 @@ fun TweetsPage(tweetsViewModel: TweetsViewModel) {
                                 placeholder = { Text(text = "Tweet your reply") },
                                 modifier = Modifier
                                     .border(1.dp, Color.Gray,
-                                        shape = RoundedCornerShape(20.dp)
+                                        shape = RoundedCornerShape(25.dp)
                                     )
                                     .width(250.dp)
+                                    .height(100.dp)
                             )
                             Row {
                                 val mainButtonColor = ButtonDefaults.buttonColors(
@@ -136,9 +137,9 @@ fun TweetsPage(tweetsViewModel: TweetsViewModel) {
                                     colors = mainButtonColor,
                                     shape = RoundedCornerShape(20.dp),
                                             modifier = Modifier
-                                                .padding(15.dp)
+                                                .padding(5.dp)
                                                 .height(40.dp)
-                                                .width(80.dp)
+                                                .width(100.dp)
                                     ,onClick = {
                                         if(tweetValue.value.isEmpty()){
                                  Toast.makeText(context, "Please Add Tweet :)", Toast.LENGTH_SHORT).show()
