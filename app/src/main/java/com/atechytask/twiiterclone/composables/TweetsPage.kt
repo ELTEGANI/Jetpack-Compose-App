@@ -83,7 +83,7 @@ fun TweetsPage(tweetsViewModel: TweetsViewModel) {
     Column(Modifier.fillMaxHeight()) {
             Column(
                 modifier = Modifier
-                    .padding(vertical = 0.dp)
+                    .padding(top = 50.dp)
             ) {
                 TweetList(tweetsViewModel)
             }
@@ -143,7 +143,8 @@ fun TweetsPage(tweetsViewModel: TweetsViewModel) {
                                  Toast.makeText(context, "Please Add Tweet :)", Toast.LENGTH_SHORT).show()
                                         }else{
                                       uiScope.launch {
-                                          addPost(tweetsViewModel,Tweets(user_name = "Tegani",
+                                          //TODO username should not be fixed
+                                          addPost(tweetsViewModel,Tweets(user_name = "ELTegani",
                                           tweets = tweetValue.value,imageTag =
                                               Random.nextInt(0, 2)),context)
                                       }

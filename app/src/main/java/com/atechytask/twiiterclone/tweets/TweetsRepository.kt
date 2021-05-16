@@ -1,6 +1,5 @@
 package com.atechytask.twiiterclone.tweets
 
-import com.atechytask.twiiterclone.data.DataOrException
 import com.atechytask.twiiterclone.data.SignUp
 import com.atechytask.twiiterclone.data.Tweets
 import com.atechytask.twiiterclone.utils.State
@@ -34,7 +33,7 @@ class TweetsRepository @Inject constructor(
         awaitClose { subscription.remove() }
     }
 
-    fun signInUser(userEmail:String,userPassword:String) = flow<State<Boolean>> {
+    fun signInUser(userEmail:String,userPassword:String) = flow {
         emit(State.Loading())
         val snapshot = firebaseFirestore.collection("users").get().await()
         val signUpSnapshot = snapshot.toObjects(SignUp::class.java)
