@@ -21,7 +21,6 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -39,8 +38,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.lang.Math.random
-import kotlin.random.Random
 
 @InternalCoroutinesApi
 @Composable
@@ -83,7 +80,7 @@ fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
             Text(
                 text = "Create your Account",
                 style = TextStyle(
-                    fontWeight = FontWeight.Bold,
+                    fontWeight = Bold,
                     letterSpacing = 2.sp),
                 fontSize = 20.sp
             )
@@ -98,11 +95,12 @@ fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
                         backgroundColor = Color.White,
                         unfocusedIndicatorColor = Color.Transparent,
                         focusedIndicatorColor = Color.Transparent),
-                    placeholder = { Text(text = "Name") },
+                    placeholder = { Text(text = "Name",color = Color.Gray) },
                     modifier = Modifier
                         .fillMaxWidth(8.8f)
-                        .clip(shape = RoundedCornerShape(20.dp))
-                        .border(1.dp, Color.Gray),
+                        .border(1.dp, Color.Gray,
+                            shape = RoundedCornerShape(20.dp)
+                        ),
                     keyboardOptions = KeyboardOptions(
                         capitalization = KeyboardCapitalization.None,
                         keyboardType = KeyboardType.Text),
@@ -119,11 +117,12 @@ fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
                     ),
                     onValueChange = {emailValue.value =  it },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                    placeholder = { Text(text = "Email") },
+                    placeholder = { Text(text = "Email",color = Color.Gray) },
                     modifier = Modifier
                         .fillMaxWidth(8.8f)
-                        .clip(shape = RoundedCornerShape(20.dp))
-                        .border(1.dp, Color.Gray),
+                        .border(1.dp, Color.Gray,
+                            shape = RoundedCornerShape(20.dp)
+                        ),
                 )
 
                 Spacer(modifier = Modifier.padding(15.dp))
@@ -139,11 +138,12 @@ fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
                     onValueChange = {passwordValue.value =  it },
                     visualTransformation = PasswordVisualTransformation(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                    placeholder = { Text(text = "Password") },
+                    placeholder = { Text(text = "Password",color = Color.Gray) },
                     modifier = Modifier
                         .fillMaxWidth(8.8f)
-                        .clip(shape = RoundedCornerShape(20.dp))
-                        .border(1.dp, Color.Gray),
+                        .border(1.dp, Color.Gray,
+                            shape = RoundedCornerShape(20.dp)
+                        ),
                 )
 
                 Spacer(modifier = Modifier.padding(15.dp))
@@ -159,11 +159,12 @@ fun RegisterationPage(navController: NavController, viewModel: TweetsViewModel){
                     onValueChange = {confirmPasswordValue.value =  it },
                     visualTransformation = PasswordVisualTransformation(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-                    placeholder = { Text(text = "Confirm password") },
+                    placeholder = { Text(text = "Confirm password",color = Color.Gray) },
                     modifier = Modifier
                         .fillMaxWidth(8.8f)
-                        .clip(shape = RoundedCornerShape(20.dp))
-                        .border(1.dp, Color.Gray),
+                        .border(1.dp, Color.Gray,
+                            shape = RoundedCornerShape(20.dp)
+                        ),
                 )
 
                 Spacer(modifier = Modifier.padding(15.dp))

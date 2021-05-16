@@ -24,9 +24,6 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -77,7 +74,7 @@ fun LoginPage(navController: NavController,tweetsViewModel: TweetsViewModel){
                 Text(
                     text = "Sign in to your Account",
                     style = TextStyle(
-                        fontWeight = FontWeight.Bold,
+                        fontWeight = Bold,
                         letterSpacing = 2.sp
                     ),fontSize = 20.sp
                 )
@@ -85,28 +82,30 @@ fun LoginPage(navController: NavController,tweetsViewModel: TweetsViewModel){
                 Spacer(modifier = Modifier.padding(20.dp))
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                  TextField(value =emailValue.value,
+                  OutlinedTextField(value =emailValue.value,
                       onValueChange = {emailValue.value =  it },
-                      leadingIcon = { Icon(Icons.Default.Email, "")},
+                      leadingIcon = { Icon(Icons.Default.Email
+                          , "")},
                       colors = TextFieldDefaults.textFieldColors(
                           disabledIndicatorColor = Color.Transparent,
-                          backgroundColor = Color.White,
+                          backgroundColor = Color.Gray,
                           unfocusedIndicatorColor = Color.Transparent,
-                          focusedIndicatorColor = Color.Transparent,
-
+                          focusedIndicatorColor = Color.Transparent
                       ),
-                      placeholder = {Text(text = "Email")},
+                      placeholder = {Text(text = "Email",color = Color.Gray)},
                       modifier = Modifier
                           .fillMaxWidth(8.8f)
-                          .clip(shape = RoundedCornerShape(20.dp))
-                          .border(1.dp, Color.Gray),
+                          .border(1.dp, Color.Gray,
+                              shape = RoundedCornerShape(20.dp)
+                              ),
                           keyboardOptions = KeyboardOptions(
                           capitalization = KeyboardCapitalization.None,
                           keyboardType = KeyboardType.Email),
                   )
+
                     Spacer(modifier = Modifier.padding(15.dp))
 
-                    TextField(
+                    OutlinedTextField(
                         value =  passwordValue.value,
                         leadingIcon = { Icon(Icons.Default.Lock, "")},
                         colors = TextFieldDefaults.textFieldColors(
@@ -118,11 +117,12 @@ fun LoginPage(navController: NavController,tweetsViewModel: TweetsViewModel){
                         onValueChange = {passwordValue.value =  it },
                         visualTransformation = PasswordVisualTransformation(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                        placeholder = {Text(text = "Password")},
+                        placeholder = {Text(text = "Password",color = Color.Gray)},
                         modifier = Modifier
                             .fillMaxWidth(8.8f)
-                            .clip(shape = RoundedCornerShape(20.dp))
-                            .border(1.dp, Color.Gray),
+                            .border(1.dp, Color.Gray,
+                                shape = RoundedCornerShape(20.dp)
+                            ),
                         )
 
                     Spacer(modifier = Modifier.padding(10.dp))
