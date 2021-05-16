@@ -1,6 +1,5 @@
 # twitter-clone
 
-### still working in redesign the page tweet 
 
 ## How to setup?
 1-Setup project on Firebase Console.
